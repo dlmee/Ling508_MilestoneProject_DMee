@@ -16,13 +16,12 @@ def scrapePG(url):
     else:
         bs = BeautifulSoup(source.read(), 'html.parser')
         paragraphs = []
-
         for paragraph in bs.div.find_all('p', class_=False):
             if len(paragraph.get_text()) > 4:
                 paragraphs.append(paragraph.get_text())
         paragraphs = paragraphs[0:-23]
         sentences = []
-        for paragraph in paragraphs:
+        for i, paragraph in enumerate(paragraphs):
             paragraph = re.sub('[\n\"\-\',\[\d\]]', ' ', paragraph)
             sents = re.split('[\.\!\?]', paragraph)
             for s in sents:

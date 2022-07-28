@@ -1,3 +1,4 @@
+from Ling508MP_DMee.app import sensedist
 from app.sensedist import *
 
 def test_Word():
