@@ -8,5 +8,5 @@ RUN pip install -U nltk
 RUN python -m nltk.downloader -q stopwords
 RUN pip install -r requirements.txt
 
-CMD [ "python", "/app/sensedist.py"]
+CMD [ "python", "/app/DM508Project.py"]
 #CMD [ "python", "test_sensedist.py"]

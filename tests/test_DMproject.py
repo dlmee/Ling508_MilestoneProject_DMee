@@ -1,6 +1,19 @@
-from Ling508MP_DMee.app import sensedist
-from app.sensedist import *
+from app.DM508Project import *
+from app.palimpsest import *
 
+#Week 4 Tests
+
+def test_SQLdatabase():
+    repo = MysqlRepository()
+    sql = ('SELECT COUNT(*) '
+           'FROM lemma')
+    repo.cursor.execute(sql)
+    answer = (list(repo.cursor))
+    assert answer[0][0] == 92
+
+
+#Week 3 Tests
+'''
 def test_Word():
     word = 'believe'
     url = 'http://localhost:8000/GM_TPaC.html'
@@ -27,3 +40,5 @@ def test_Vector():
     assert type(tvec.targvectors[0]) == tuple
     assert type(tvec.targvectors[0][0]) == str
     assert tvec.targvectors[0][1]['knew'] == 1
+'''
+

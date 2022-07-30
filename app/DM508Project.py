@@ -34,6 +34,7 @@ class Word:
         self.surface = word
         self.listlexicon(lexicon)
         self.findlemma(word)
+        #self.lemma = word
     def listlexicon(self, lexicon):
         lexicon = [line.lower() for line in lexicon]
         lexset = set()
@@ -51,7 +52,7 @@ class Word:
         for i in range(len(word)):
             if len(word)-i > 2:
                 poslemma.append(word[0:-1-i])
-        print(poslemma)
+        #print(poslemma)
         plemmas = {}
 
         for pl in poslemma:
@@ -63,7 +64,7 @@ class Word:
             if len(pl) == 4:
                 self.lemma = pl
                 self.inflections = plemmas[pl]
-        #print(plemmas)
+        return
 
 #Initially I had a Lemma class, but I'm not sure if I need that, because I'm finding that using the inflections is how I find the lemma.
 
@@ -136,13 +137,14 @@ if __name__ == '__main__':
     texts = scrapePG(url)
     vectors = Vectorizer(texts)
     newword = Word('believe', texts)
-    #print(newword.lex)
-    #print(newword.lemma)
+    print(len(newword.lex))
+    ALLWORDS = []
+    for word in newword.lex[100]:
+        ALLWORDS.append(Word(word, texts))
     print(vectors.allvector['crown']['king'])
     print(type(vectors.allvector))
     tvec = Vector(newword.lemma, newword.inflections, vectors.allvector)
     print(tvec.targvectors[0])
     print(type(tvec.targvectors[0]))
-    for tup in tvec.targvectors:
-        print(tup)
+
 
