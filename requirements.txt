@@ -1,5 +1,5 @@
 pytest
 beautifulsoup4~=4.10.0
-mysql-connector
+mysql-connector-python
 
 nltk~=3.7

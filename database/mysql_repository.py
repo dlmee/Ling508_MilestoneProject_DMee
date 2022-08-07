@@ -1,9 +1,11 @@
+from database.repository import *
 import mysql.connector
 
 
-class MysqlRepository:
+class MysqlRepository(Repository):
 
     def __init__(self):
+        super().__init__()
         config = {
             'user': 'root',
             'password': 'root',
@@ -16,5 +18,11 @@ class MysqlRepository:
         self.cursor = self.connection.cursor()
 
     def __del__(self):
-        self.cursor.close()
+        #self.cursor.close()
         self.connection.close()
+
+    def load_lemmas(self):
+        pass
+
+    def load_vectors(self):
+        pass

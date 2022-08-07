@@ -1,25 +1,22 @@
+
 from database.mysql_repository import *
 
 repo = MysqlRepository()
 
-sql = ('DELETE FROM lemma '
-       'WHERE id < 500'
-       )
-repo.cursor.execute(sql)
 
-sql = ('SELECT id, lform, sforms '
+sql = ('SELECT * '
        'FROM lemma '
        )
 repo.cursor.execute(sql)
 print(list(repo.cursor))
-
+'''
 sql = ('SELECT COUNT(*) '
        'FROM lemma')
 
 repo.cursor.execute(sql)
 answer = (list(repo.cursor))
 print(answer[0][0])
-'''
+
 sql = ('DELETE FROM lexicon '
        'WHERE wordform = "bazinga" '
        )
