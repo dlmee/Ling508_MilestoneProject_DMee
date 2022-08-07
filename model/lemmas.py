@@ -1,38 +1,49 @@
+import re
+from nltk.corpus import stopwords
 
+class Lexicon:
+    def __init__(self, corpus):
+        sw = stopwords.words('english')
+        self.lex = self.listlexicon(corpus, sw)
 
-class Word:
-    def __init__(self, word, lexicon):
-        self.surface = word
-        self.listlexicon(lexicon)
-        self.findlemma(word)
-        #self.lemma = word
-    def listlexicon(self, lexicon):
+    def listlexicon(self, lexicon, sw):
         lexicon = [line.lower() for line in lexicon]
         lexset = set()
         for paragraph in lexicon:
             allwords = re.findall('\w+', paragraph)
             for words in allwords:
-                lexset.add(words)
-        self.lex = list(lexset)
-        self.lex = sorted(self.lex)
+                if words not in sw:
+                    lexset.add(words)
+        lex = list(lexset)
+        lex = sorted(lex)
         #self.wordflow = ' '.join([str(w) for w in self.lex])
+        return lex
 
-    def findlemma(self, word):
-        lemmatch = []
+
+class Lemma:
+    def __init__(self, lexicon):
+        self.al = []
+        for word in lexicon:
+            lemma, inflections = self.findlemma(word, lexicon)
+            self.al.append((word, lemma, inflections))
+
+    def findlemma(self, word, lexicon):
+        lemma = ''
+        inflections = []
         poslemma = [word]
         for i in range(len(word)):
             if len(word)-i > 2:
                 poslemma.append(word[0:-1-i])
-        #print(poslemma)
         plemmas = {}
+        poslemma.sort(key= lambda x:len(x))
 
         for pl in poslemma:
             lm = []
-            for posword in self.lex:
+            for posword in lexicon:
                 if re.match(pl, posword):
                     lm.append(posword)
                 plemmas[pl] = lm
-            if len(pl) == 4:
-                self.lemma = pl
-                self.inflections = plemmas[pl]
-        return
+            if len(lm) > len(inflections)/5:
+                lemma = pl
+                inflections = plemmas[pl]
+        return lemma, inflections

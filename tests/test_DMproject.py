@@ -1,4 +1,4 @@
-from app.DM508Project import *
+from app.services import *
 from app.palimpsest import *
 
 #Week 4 Tests
