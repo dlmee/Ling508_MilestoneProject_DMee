@@ -1,18 +1,14 @@
 from model.senses import *
 import numpy as np
 
-'''('animals', 'an', 'heart, earth, great, wallowing, mass, blood, hearts, men, glowing,
- hot, melted, metals, stones, ever, heard, philosophers, say, another, thing, greatest,
-  consequence, take, care, go, hill, country, many, actually, lives, going, beasts, yet,
-   fresh, animal, came, seemed, reasoned, certainly, fought, overcome, lina, last, wood,
-    followed, forty, nine, grotesquely, ugly, extravagantly, abnormal, imagination, conceive, knew, bo'),'''
 
 class SenseDistributor:
 
     def __init__(self, target, context): #target equals one vector, context equals all vectors.
         self.probabilities = self.groupings(target, context)
-        self.senses = self.splitgroups(self.probabilities)
-
+        senses = self.splitgroups(self.probabilities)
+        print(senses)
+        self.senses = self.createsense(target, senses)
     def groupings(self, target, context):
         groupings = {}
         for pair in context[target]:
@@ -101,14 +97,17 @@ class SenseDistributor:
                                     used.append(k2)
             sensegroups.append(grouping)
         refinedgroups = self.splitrefine(sensegroups)
-        #print("These are refined", refinedgroups)
-        #return refinedgroups
+        return refinedgroups
 
-    def removedoubles(self, blist):
-        print("blist", blist)
-        new = set(blist)
-        slist = list(new)
-        return slist
+    def mergelist(self, list1, list2):
+        newlist = []
+        for element in list1:
+            if element not in newlist:
+                newlist.append(element)
+        for element in list2:
+            if element not in newlist:
+                newlist.append(element)
+        return newlist
     def splitrefine(self, sensegroups): #receiving a list of a list of tuples.
 
         #Step one: weed out singletons
@@ -118,27 +117,26 @@ class SenseDistributor:
                 rgroups1.append(group)
         #Step two: recursively merge as necessary.
         newgroupings = rgroups1
-        print(newgroupings)
         for groupa in rgroups1:
             for groupb in rgroups1:
                 if groupa != groupb:
                     aga, agb = self.vect_to_num(groupa, groupb)
                     cvalue = self.cosine(aga, agb)
                     if cvalue > .5:
-                        merged = groupa, groupb
-                        merged = self.removedoubles(merged)
+                        merged = self.mergelist(groupa, groupb)
                         newgroupings.remove(groupa)
                         newgroupings.remove(groupb)
                         newgroupings.append(merged)
-                        print("These are the new groupings", newgroupings)
-                        finalgroupings = self.splitrefine(newgroupings)
-                        return finalgroupings
-                    else:
+                        newgroupings = self.splitrefine(newgroupings)
                         return newgroupings
+        return newgroupings
 
-
-            #search rest of dict, excluding what has already been grouped
-            #Create new list
+    def createsense(self, target, subvect):
+        senses= []
+        for i, sv in enumerate(subvect):
+            sense = Senses(target, i, sv)
+            senses.append(sense)
+        return senses
 
 
 

@@ -1,4 +1,4 @@
-import sense_distributor
+from app.sense_distributor import *
 from database.mysql_repository import *
 from model.lemmas import *
 from model.vectors import *
@@ -32,7 +32,7 @@ class Services:
         return dictvectors
 
     def splitsense(self, target, context):
-        result = sense_distributor.SenseDistributor(target, context)
+        result = SenseDistributor(target, context)
         return result
 
 
@@ -41,10 +41,8 @@ class Services:
 
 if __name__ == '__main__':
     test = Services('animals')
-    print(test.context['animals'])
-    #print(test.result.senses.sense)
-    print(test.result.senses)
-    #print(len(test.result.senses))
+    for line in test.result.senses:
+        print(line.sense, line.surface, line.definition)
 
 
 

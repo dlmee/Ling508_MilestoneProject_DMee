@@ -1,8 +1,18 @@
 from app.services import *
-from app.palimpsest import *
+from model.senses import *
+
+#Week 5 Tests
+
+def test_usecase1():
+    test = Services('animals')
+    for line in test.result.senses:
+        assert (type(line)) == Senses
+        assert line.surface == 'animals'
+        assert type(line.sense) == int
+        assert type(line.definition) == list
 
 #Week 4 Tests
-
+'''
 def test_SQLdatabase():
     repo = MysqlRepository()
     sql = ('SELECT COUNT(*) '
@@ -10,7 +20,7 @@ def test_SQLdatabase():
     repo.cursor.execute(sql)
     answer = (list(repo.cursor))
     assert answer[0][0] == 92
-
+'''
 
 #Week 3 Tests
 '''
