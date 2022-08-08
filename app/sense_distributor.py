@@ -10,19 +10,24 @@ import numpy as np
 class SenseDistributor:
 
     def __init__(self, target, context): #target equals one vector, context equals all vectors.
-        self.senses = self.groupings(target, context)
         self.probabilities = self.groupings(target, context)
+        self.senses = self.splitgroups(self.probabilities)
 
     def groupings(self, target, context):
-        allprobs = []
+        groupings = {}
         for pair in context[target]:
-            allprobs.append(pair[0])
+            numprobs = []
+            allprobs = []
+            vecroot = pair[0]
             for pair2 in context[target]:
                 if pair != pair2:
                     array1, array2 = self.vect_to_num(context[pair[0]], context[pair2[0]])
                     probability = self.cosine(array1, array2)
-                    allprobs.append(probability)
-        return allprobs
+                    probability = float(probability)
+                    numprobs.append((pair2[0], probability))
+            numprobs.sort(key=lambda x: x[1], reverse=True)
+            groupings[vecroot] = numprobs
+        return groupings
         #for vector bit in target
             #get vector of vector bit
             #compare that vector bit against every other vector bit
@@ -75,7 +80,65 @@ class SenseDistributor:
 
 
 
+    def splitgroups(self, probabilities):
+        copy = probabilities
+        #for each dictionary element
+            #search the key in the values of all the others.
+            #create list with highest coindexed values
+        sensegroups = []
+        used = []
+        for k, v in probabilities.items():
+            grouping = [(k, 1)]
+            if k not in used:
+                for k2, v2 in copy.items():
+                    #print("Same word? ", k, k2)
+                    if k != k2: #not the same key
+                        for step in v2:
+                            if k == step[0]: #finding the right point in the list
+                                similarity = step[1]
+                                if similarity > .4:
+                                    grouping.append((k2, 1)) #These keys share a high similarity
+                                    used.append(k2)
+            sensegroups.append(grouping)
+        refinedgroups = self.splitrefine(sensegroups)
+        #print("These are refined", refinedgroups)
+        #return refinedgroups
 
+    def removedoubles(self, blist):
+        print("blist", blist)
+        new = set(blist)
+        slist = list(new)
+        return slist
+    def splitrefine(self, sensegroups): #receiving a list of a list of tuples.
+
+        #Step one: weed out singletons
+        rgroups1 = []
+        for group in sensegroups:
+            if len(group) > 2:
+                rgroups1.append(group)
+        #Step two: recursively merge as necessary.
+        newgroupings = rgroups1
+        print(newgroupings)
+        for groupa in rgroups1:
+            for groupb in rgroups1:
+                if groupa != groupb:
+                    aga, agb = self.vect_to_num(groupa, groupb)
+                    cvalue = self.cosine(aga, agb)
+                    if cvalue > .5:
+                        merged = groupa, groupb
+                        merged = self.removedoubles(merged)
+                        newgroupings.remove(groupa)
+                        newgroupings.remove(groupb)
+                        newgroupings.append(merged)
+                        print("These are the new groupings", newgroupings)
+                        finalgroupings = self.splitrefine(newgroupings)
+                        return finalgroupings
+                    else:
+                        return newgroupings
+
+
+            #search rest of dict, excluding what has already been grouped
+            #Create new list
 
 
 

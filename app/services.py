@@ -43,7 +43,8 @@ if __name__ == '__main__':
     test = Services('animals')
     print(test.context['animals'])
     #print(test.result.senses.sense)
-    print(test.result.probabilities)
+    print(test.result.senses)
+    #print(len(test.result.senses))
 
 
 
