@@ -18,6 +18,9 @@ Please do note what has been accomplished.
 
 ...I also learned that my init.sql file only runs on the first instantiation. After that, I need to docker-compose down -v if I want to rebuild my database.
 
+## Update 8/8/22!
+
+I have reached my goal for week 5 and implemented a service layer, that returns to me the Senses class for each sense found of a particular word in a context. I definitely want more data, and need to refine and expand (next step, returning context sentences to various senses). But at least I made it this far!
 
 
 
