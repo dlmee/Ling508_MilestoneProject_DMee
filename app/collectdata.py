@@ -33,6 +33,14 @@ def listtostring(list, max):
     longstring = ', '.join(list)
     return longstring[:max]
 
+def dicttostring(dict, max):
+    mergedlist = []
+    for k, v in dict.items():
+        mergedlist.append(k)
+        mergedlist.append(str(v))
+    longstring = ', '.join(mergedlist)
+    return longstring[:max]
+
 if __name__ == "__main__":
 
     url = 'http://localhost:8000/Scrapes/GM_TPaC.html'
@@ -41,6 +49,7 @@ if __name__ == "__main__":
     #Need to create a set of all words in the texts.
     lexicon = Lexicon(texts)
     vectors = Vectorizer(texts)
+    print(vectors.allvector['animals'])
 
     # lemma: lform, wforms (inflections)
     alllemmas = Lemma(lexicon.lex)
@@ -54,11 +63,11 @@ if __name__ == "__main__":
     # vectors: wform, lform, vecform
     vectlist = []
     for word in alllemmas.al:
-        cleanvec = listtostring(vectors.allvector[word[0]], 425)
+        cleanvec = dicttostring(vectors.allvector[word[0]], 425)
         vectlist.append((word[0], word[1], cleanvec))
 
-    repo = MysqlRepository()
-    repo.cursor.executemany("INSERT INTO vectors VALUES (%s, %s, %s)", vectlist)
+    #repo = MysqlRepository()
+    #repo.cursor.executemany("INSERT INTO vectors VALUES (%s, %s, %s)", vectlist)
 
 
 
