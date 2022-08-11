@@ -49,7 +49,7 @@ if __name__ == "__main__":
     #Need to create a set of all words in the texts.
     lexicon = Lexicon(texts)
     vectors = Vectorizer(texts)
-    print(vectors.allvector['animals'])
+    print(vectors.contextsentences[0])
 
     # lemma: lform, wforms (inflections)
     alllemmas = Lemma(lexicon.lex)
@@ -57,8 +57,8 @@ if __name__ == "__main__":
     for line in alllemmas.al:
         lemset.add((line[1], listtostring(line[2], 250)))
     lemlist = list(lemset)
-    #repo = MysqlRepository()
-    #repo.cursor.executemany("INSERT INTO lemma VALUES (%s, %s)", lemlist)
+    repo = MysqlRepository()
+    repo.cursor.executemany("INSERT INTO lemma VALUES (0, %s, %s)", lemlist)
 
     # vectors: wform, lform, vecform
     vectlist = []
@@ -66,9 +66,14 @@ if __name__ == "__main__":
         cleanvec = dicttostring(vectors.allvector[word[0]], 425)
         vectlist.append((word[0], word[1], cleanvec))
 
-    #repo = MysqlRepository()
-    #repo.cursor.executemany("INSERT INTO vectors VALUES (%s, %s, %s)", vectlist)
+    repo = MysqlRepository()
+    repo.cursor.executemany("INSERT INTO vectors VALUES (%s, %s, %s)", vectlist)
 
 
 
     #lexicon: id, wform, sense, subvect
+
+    #contextsentences: chapter, sentence, vecfriendly
+
+    repo = MysqlRepository()
+    repo.cursor.executemany("INSERT INTO context_sentences VALUES (0, %s, %s, %s)", vectors.contextsentences)

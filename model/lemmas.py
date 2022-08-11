@@ -20,6 +20,7 @@ class Lexicon:
         return lex
 
 
+
 class Lemma:
     def __init__(self, lexicon):
         self.al = []

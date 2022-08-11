@@ -8,6 +8,7 @@ class Vectorizer:
         self.ESW = stopwords.words('english')
         self.tokenize()
         self.dictasvector()
+        self.contextsentences = self.createcontext(corpus)
 
     def tokenize(self):
         self.refine = [line.lower() for line in self.corpus]
@@ -45,6 +46,25 @@ class Vectorizer:
                         if w2 != word:
                             nest[w2] = 1
                     self.allvector[word] = nest
+
+    def createcontext(self, corpus):
+        contextsentences = []
+        for i, sentence in enumerate(corpus):
+            vecfriendly = []
+            for word in self.nrefine[i]:
+                if word in vecfriendly:
+                    for w in vecfriendly:
+                        if word == w[0]:
+                            cv = w[1]
+                    vecfriendly.remove((word, cv))
+                    vecfriendly.append((word, cv+1))
+                else:
+                    vecfriendly.append((word, 1))
+            longstring = ''
+            for vec in vecfriendly:
+                longstring = longstring + str(vec)
+            contextsentences.append((0, sentence[:395], longstring[:345]))
+        return contextsentences
 
 
 class Vector:

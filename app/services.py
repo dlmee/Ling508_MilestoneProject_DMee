@@ -1,8 +1,5 @@
 from app.sense_distributor import *
 from database.mysql_repository import *
-from model.lemmas import *
-from model.vectors import *
-from model.senses import *
 import re
 
 class Services:
@@ -43,6 +40,14 @@ if __name__ == '__main__':
     test = Services('animals')
     for line in test.result.senses:
         print(line.sense, line.surface, line.definition)
+
+    searches = ['afternoon', 'beauty', 'animals', 'bed', 'diamonds', 'forget', 'inexorable', 'nails', 'radiant', 'sky', 'toys', 'young']
+    results = []
+    for word in searches:
+        results.append(Services(word))
+    for result in results:
+        for line in result.result.senses:
+            print(line.sense, line.surface, line.definition)
 
 
 
