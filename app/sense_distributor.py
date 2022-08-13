@@ -4,11 +4,12 @@ import numpy as np
 
 class SenseDistributor:
 
-    def __init__(self, target, context): #target equals one vector, context equals all vectors.
+    def __init__(self, target, context, sentences): #target equals one vector, context equals all vectors.
         self.probabilities = self.groupings(target, context)
         senses = self.splitgroups(self.probabilities)
         print(senses)
         self.senses = self.createsense(target, senses)
+
     def groupings(self, target, context):
         groupings = {}
         for pair in context[target]:
@@ -24,11 +25,6 @@ class SenseDistributor:
             numprobs.sort(key=lambda x: x[1], reverse=True)
             groupings[vecroot] = numprobs
         return groupings
-        #for vector bit in target
-            #get vector of vector bit
-            #compare that vector bit against every other vector bit
-            #find the mathematically lowest difference among all possibilities.
-            #produce senses based on these mathematically lowest clusters.
 
     def cosine(self, array1, array2):
         numerator = sum(array1 * array2)
@@ -130,6 +126,16 @@ class SenseDistributor:
                         newgroupings = self.splitrefine(newgroupings)
                         return newgroupings
         return newgroupings
+
+    def find_context_sentences(self, target, subvect, cs):
+        sim_sents = []
+        for triad in cs:
+            if target in triad[2]:
+                gold, silver = self.vect_to_num(subvect, triad[2])
+                similarity = self.cosine(gold, silver)
+                if similarity > .3:
+                    sim_sents.append(triad[0])
+        return sim_sents
 
     def createsense(self, target, subvect):
         senses= []

@@ -4,41 +4,29 @@ import re
 
 class Services:
 
-    def __init__(self, target):
+    def __init__(self):
         self.repo = MysqlRepository()
-        self.context = self.loadvectors()
-        assert target in self.context.keys(), 'Target word is not in context.'
-        self.result = self.splitsense(target, self.context)
 
-    def loadvectors(self):
-        sql = ('SELECT * '
-               'FROM vectors '
-               )
-        self.repo.cursor.execute(sql)
-        allvectors = list(self.repo.cursor) #NOTE, the answer from the cursor is given only ONCE!
-        dictvectors = {}
-        for vector in allvectors:
-            separated = re.split(', ', vector[2])
-            reconstituted = []
-            for i, value in enumerate(separated):
-                if i % 2 == 1:
-                    if len(value) != 1:
-                        value = 1
-                    reconstituted.append((separated[i-1], int(value)))
-            dictvectors[vector[0]] = reconstituted
-        return dictvectors
 
-    def splitsense(self, target, context):
-        result = SenseDistributor(target, context)
+    def findsenses(self, target):
+        print(target)
+        vectors = self.repo.load_vectors()
+        assert target in vectors.keys(), 'Target word is not in context.'
+        sentences = self.repo.load_context_sent()
+        result = SenseDistributor(target, vectors, sentences)
         return result
 
 
 
-
-
 if __name__ == '__main__':
-    test = Services('animals')
-    for line in test.result.senses:
+    services = Services() #Need to make it so the services layers can implement multiple use cases.
+    test = services.findsenses('animals')
+    for line in test.senses:
+        print(line.sense, line.definition)
+    #For use case 1 i want services.senses
+    #For use case 2 i want services.usecase2
+    #Separate the class by methods for various use cases. See diagram in project overview.
+    '''for line in test.result.senses:
         print(line.sense, line.surface, line.definition)
 
     searches = ['afternoon', 'beauty', 'animals', 'bed', 'diamonds', 'forget', 'inexorable', 'nails', 'radiant', 'sky', 'toys', 'young']
@@ -47,7 +35,7 @@ if __name__ == '__main__':
         results.append(Services(word))
     for result in results:
         for line in result.result.senses:
-            print(line.sense, line.surface, line.definition)
+            print(line.sense, line.surface, line.definition)'''
 
 
 
