@@ -1,8 +1,7 @@
-import collectdata
+from app.collectdata import *
 from database.mysql_repository import *
 from model.vectors import *
 from model.lemmas import *
-import re
 
 
 class DB_Populator:
@@ -10,7 +9,7 @@ class DB_Populator:
         self.repo = MysqlRepository()
 
     def getdata(self, source):
-        datacollection = collectdata.CollectData()
+        datacollection = CollectData()
         self.data = datacollection.scrapePaC(source)
         return self.data
 
@@ -83,11 +82,11 @@ class DB_Populator:
         longstring = ', '.join(mergedlist)
         return longstring[:max]
 
-if __name__ == "__main__":
+'''if __name__ == "__main__":
     DBP = DB_Populator()
     url = 'http://localhost:8000/Scrapes/GM_TPaC.html'
     data = DBP.getdata(url)
     DBP.populate_lemmas(data)
     DBP.populate_vectors(data)
     DBP.populate_sentences(data)
-    DBP.populate_lexicon()
+    DBP.populate_lexicon()'''

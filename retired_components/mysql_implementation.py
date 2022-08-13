@@ -1,5 +1,5 @@
 
-from database.mysql_repository import *
+from sqldatabase.mysql_repository import *
 
 repo = MysqlRepository()
 

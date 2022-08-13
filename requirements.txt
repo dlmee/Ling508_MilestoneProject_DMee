@@ -1,5 +1,9 @@
 pytest
-beautifulsoup4~=4.10.0
+beautifulsoup4 #~=4.10.0
 mysql-connector-python
-
-nltk~=3.7
+Flask
+httpie
+flask-cors
+Numpy
+databases
+#nltk~=3.7
