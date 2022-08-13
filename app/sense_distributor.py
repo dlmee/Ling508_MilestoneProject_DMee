@@ -4,11 +4,11 @@ import numpy as np
 
 class SenseDistributor:
 
-    def __init__(self, target, context, sentences): #target equals one vector, context equals all vectors.
+    def __init__(self, target, context, sentences, lexicon): #target equals one vector, context equals all vectors.
         self.probabilities = self.groupings(target, context)
         senses = self.splitgroups(self.probabilities)
-        print(senses)
-        self.senses = self.createsense(target, senses)
+        context_sentences = self.find_context_sentences(target, senses, sentences, lexicon)
+        self.senses = self.createsense(target, senses, context_sentences)
 
     def groupings(self, target, context):
         groupings = {}
@@ -127,20 +127,26 @@ class SenseDistributor:
                         return newgroupings
         return newgroupings
 
-    def find_context_sentences(self, target, subvect, cs):
-        sim_sents = []
-        for triad in cs:
-            if target in triad[2]:
-                gold, silver = self.vect_to_num(subvect, triad[2])
-                similarity = self.cosine(gold, silver)
-                if similarity > .3:
-                    sim_sents.append(triad[0])
-        return sim_sents
+    def find_context_sentences(self, target, sensevect, cs, lexicon):
+        indices = lexicon[target]
+        context_sentences = []
+        for sense in sensevect:
+            single_context = []
+            for index in indices:
+                for sentence in cs: # Might want to make this a dictionary at some point.
+                    if int(index) == sentence[0]:
+                        gold, silver = self.vect_to_num(sense, sentence[2])
+                        similarity = self.cosine(gold, silver)
+                        if similarity > .2:
+                            single_context.append(sentence[1])
+            context_sentences.append(single_context)
+        return context_sentences
 
-    def createsense(self, target, subvect):
-        senses= []
+
+    def createsense(self, target, subvect, contextsentences):
+        senses = []
         for i, sv in enumerate(subvect):
-            sense = Senses(target, i, sv)
+            sense = Senses(target, i, sv, contextsentences[i])
             senses.append(sense)
         return senses
 

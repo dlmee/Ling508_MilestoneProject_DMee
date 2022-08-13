@@ -65,7 +65,21 @@ class MysqlRepository(Repository):
             recon_nums = re.findall('[0-9]+', cs[3])
             # assert len(recon_words) == len(recon_nums)
             for i in range(len(recon_nums)):
-                reconstituted.append((recon_words[i], recon_nums[i]))
+                reconstituted.append((recon_words[i], int(recon_nums[i])))
             contextsents.append((cs[0], cs[2], reconstituted, recon_words))
         return contextsents
+
+    def load_lexicon(self):
+        sql = ('SELECT * '
+               'FROM lexicon '
+               )
+        self.cursor.execute(sql)
+        lexdraw = list(self.cursor)
+        lexicon = {}
+        for lex in lexdraw:
+            word = re.findall('[a-z]+', lex[1])
+            indices = re.findall('[0-9]+', lex[2])
+            lexicon[word[0]] = indices
+        return lexicon
+
 
