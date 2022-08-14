@@ -1,7 +1,7 @@
 #Thanks to Dr. Berry for his example code in Sanskrit Repos
 # https://github.com/jjberry-508/sanskrit-508/tree/week6
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, json
 from flask_cors import CORS, cross_origin
 from logging.config import dictConfig
 
@@ -31,8 +31,6 @@ cors = CORS(app, resources={r"/parse": {"origins": "http://localhost:port"}})
 
 services = Services()
 
-services.instantiatedb()
-
 
 @app.route('/')
 def doc() -> str:
@@ -40,13 +38,39 @@ def doc() -> str:
     with open("app/doc.html", "r") as f:
         return f.read()
 
-'''
-@app.route("/generate", methods=["GET"])
-def generate_words():
-    services.generate_words()
-    app.logger.info("/generate - Generated words.")
+
+@app.route("/generatedb", methods=["GET"])
+def generate_db():
+    services.instantiatedb()
+    app.logger.info("/generatedb - Generated words.")
     return jsonify({"msg": "success"})
-'''
+
+
+@app.route("/find_sense", methods=["POST"])
+@cross_origin(origin='localhost', headers=['Content-Type', 'Authorization'])
+def parse_word():
+    data = request.get_json()
+    app.logger.info(f"/find_sense - Got request: {data}")
+    results = services.findsenses(data.get('word'))
+    forms = {}
+    for result in results.senses:
+        forms['surface'] = result.surface
+        forms['sense'] = result.sense
+    app.logger.info(f"/find_sense - Output: {forms}")
+    return jsonify(forms)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')

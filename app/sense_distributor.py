@@ -8,7 +8,7 @@ class SenseDistributor:
         self.probabilities = self.groupings(target, context)
         senses = self.splitgroups(self.probabilities)
         context_sentences = self.find_context_sentences(target, senses, sentences, lexicon)
-        self.senses = self.createsense(target, senses, context_sentences)
+        self.senses = self.createsense(target, senses, context_sentences) #returns a list of senses class objects.
 
     def groupings(self, target, context):
         groupings = {}

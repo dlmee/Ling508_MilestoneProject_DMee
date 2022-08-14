@@ -1,3 +1,5 @@
+# DROP DATABASE IF EXISTS mcdonald;
+
 
 from sqldatabase.mysql_repository import *
 
