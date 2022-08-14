@@ -38,6 +38,11 @@ def doc() -> str:
     with open("app/doc.html", "r") as f:
         return f.read()
 
+@app.route('/web')
+def web() -> str:
+    app.logger.info("web - Got request")
+    with open("web/sense_finder.html", "r") as f:
+        return f.read()
 
 @app.route("/generatedb", methods=["GET"])
 def generate_db():
