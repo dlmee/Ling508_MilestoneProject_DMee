@@ -10,13 +10,15 @@ Eric Jackson
 July 9th, 2022
 
 
-Use Cases [Updated Jul 16]
+Use Cases [Updated Aug 14]
 
 
 1. Use Case 1: A context sensitive word sense parser. 
  
    1. Input: A lexical word: e.g. ‘head’ + a particular context. 
-   2. Output: heada : (an X of the Y). a part of the body (% of usage in this context). Headb : a leader of an organization (% of usage in this context). headc :third sense (% of usage in this context). 
+   2. Output: surface: head, sense: 1, vectors: {leader:1, ear:1}, examples: "this is an example sentence using head."
+
+PLEASE NOTE! This is my primary use case. The use cases below are not currnetly implemented. They are goals for a future point. I will leave them in the documentation for such a time.
 
 
 2. Use Case 2: Reverse indexed word sense search within a particular context.
