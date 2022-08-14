@@ -2,58 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sanskrit Bot API</title>
+    <title>Sense Disambiguator API</title>
 </head>
 <body>
-<h1>Welcome to the Sanskrit bot API</h1>
+<h1>Welcome to the Sense Disambiguator API</h1>
 <h2>Methods</h2>
-
-<h3>Parse a word</h3>
+<h3>Generate database</h3>
 <div>
-<p>Endpoint: http://localhost:5000/parse</p>
-<p>Request type: POST</p>
-<p>Request body: JSON with field "word", e.g. </p>
-<pre>
-  {
-    "word": "bharati"
-  }
-</pre>
-<p>Response: JSON with parse details, e.g. </p>
-<pre>
-  [
-  {
-    "id": 7,
-    "lex_entry": {
-      "chapter": 4,
-      "definition": "to bear, carry",
-      "form": "bhṛ",
-      "noun_declension": null,
-      "noun_gender": null,
-      "pos": "finite_verb",
-      "preverb": null,
-      "verb_class": "I",
-      "verb_surface": "bharati"
-    },
-    "mood": "indicative",
-    "number": "singular",
-    "person": "third",
-    "surface_form": "bharati",
-    "tense": "present",
-    "voice": "active"
-  }
-]
-</pre>
-</div>
-
-<h3>Generate words</h3>
-<div>
-<p>Endpoint: http://localhost:5000/generate</p>
+  <p>NOTE: This will take a few minutes, it's doing a lot of processing under the hood.</p>
+  <p>You will have to run this first, before you generate a post request. Otherwise the database will be largely empty.</p>
+  <p>Currently the scrape is pointed at 'http://host.docker.internal:8000/Scrapes/GM_TPaC.html' this means you will need to have a local server running at this directory</p>
+    <p>Currently this is set up as a GET request type, but this could easily be retooled as a POST to target different databases.</p>
+<p>Endpoint: http://localhost:5000/generatedb</p>
 <p>Request type: GET</p>
 <p>Response: </p>
 <pre>
   {
     "msg": "success"
   }
+</pre>
+</div>
+<h3>Find the senses of a word.</h3>
+<div>
+<p>Endpoint: http://localhost:5000/find_sense</p>
+<p>Request type: POST</p>
+<p>Request body: JSON with field "word", e.g. </p>
+<pre>
+  {
+    "word": "beauty"
+  }
+</pre>
+<p>Response: JSON list of dictionaries with word form, sense, vector, and example sentences, e.g. </p>
+<pre>
+{
+        "examples": [
+            " Fearing at last that he was rude  he turned them away; and  behold  he was in a room that was for beauty marvellous"
+        ],
+        "sense": 2,
+        "surface": "beauty",
+        "vector": [
+            [
+                "fearing",
+                1
+            ],
+            [
+                "behold",
+                1
+            ],
+            [
+                "marvellous",
+                1
+            ]
+        ]
+    }
 </pre>
 </div>
 </body>

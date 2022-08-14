@@ -52,23 +52,16 @@ def parse_word():
     data = request.get_json()
     app.logger.info(f"/find_sense - Got request: {data}")
     results = services.findsenses(data.get('word'))
-    forms = {}
+    allforms = []
     for result in results.senses:
+        forms = {}
         forms['surface'] = result.surface
         forms['sense'] = result.sense
-    app.logger.info(f"/find_sense - Output: {forms}")
-    return jsonify(forms)
-
-
-
-
-
-
-
-
-
-
-
+        forms['vector'] = result.definition
+        forms['examples'] = result.examples
+        allforms.append(forms)
+    app.logger.info(f"/find_sense - Output: {allforms}")
+    return jsonify(allforms)
 
 
 
