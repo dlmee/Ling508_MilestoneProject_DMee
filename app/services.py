@@ -8,14 +8,14 @@ class Services:
     def __init__(self):
         self.repo = MysqlRepository()
 
-    def instantiatedb(self):
+    def instantiatedb(self, url):
         DBP = DB_Populator()
-        url = 'http://host.docker.internal:8000/Scrapes/GM_TPaC.html'
         data = DBP.getdata(url)
         DBP.populate_lemmas(data)
         DBP.populate_vectors(data)
         DBP.populate_sentences(data)
         DBP.populate_lexicon()
+        return {'msg':'success'}
 
     def findsenses(self, target):
         vectors = self.repo.load_vectors()

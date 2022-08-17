@@ -8,7 +8,7 @@ class CollectData:
 
     def __init__(self):
         pass
-    def scrapePaC(self, url):
+    def scrape(self, url):
         try:
             source = urlopen(url)
         except HTTPError as e:
@@ -18,10 +18,10 @@ class CollectData:
         else:
             bs = BeautifulSoup(source.read(), 'html.parser')
             paragraphs = []
-            for paragraph in bs.div.find_all('p', class_=False):
-                if len(paragraph.get_text()) > 4:
+            for paragraph in bs.body.find_all('p', class_=False):
+                if len(paragraph.get_text()) > 10:
                     paragraphs.append(paragraph.get_text())
-            paragraphs = paragraphs[0:-23]
+            paragraphs = paragraphs[10:-47]
             sentences = []
             for i, paragraph in enumerate(paragraphs):
                 paragraph = re.sub('[\n\"\-\',\[\d\]]', ' ', paragraph)

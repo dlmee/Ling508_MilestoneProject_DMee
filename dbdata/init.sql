@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS mcdonald;
+DROP DATABASE IF EXISTS mcdonald;
+CREATE DATABASE mcdonald;
 USE mcdonald;
 
 CREATE TABLE lexicon (

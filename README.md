@@ -1,6 +1,7 @@
 # Ling508_MilestoneProject_DMee
 
 ## Week 6 Submission
+## PLEASE NOTE that main is now ahead of Week 6. Reference week 6 branch if necessary.
 
 [My_github_repo](https://github.com/dlmee/Ling508_MilestoneProject_DMee)
 

@@ -10,7 +10,7 @@ class DB_Populator:
 
     def getdata(self, source):
         datacollection = CollectData()
-        self.data = datacollection.scrapePaC(source)
+        self.data = datacollection.scrape(source)
         return self.data
 
     def populate_lemmas(self, texts):

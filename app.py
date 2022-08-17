@@ -44,11 +44,14 @@ def web() -> str:
     with open("web/sense_finder.html", "r") as f:
         return f.read()
 
-@app.route("/generatedb", methods=["GET"])
+@app.route("/generatedb", methods=["POST"])
+@cross_origin(origin='localhost', headers=['Content-Type', 'Authorization'])
 def generate_db():
-    services.instantiatedb()
-    app.logger.info("/generatedb - Generated words.")
-    return jsonify({"msg": "success"})
+    data = request.get_json()
+    app.logger.info(f"/find_sense - Got request: {data}")
+    results = services.instantiatedb(data.get('url'))
+    app.logger.info(f"/generatedb - output: {results}")
+    return jsonify(results)
 
 
 @app.route("/find_sense", methods=["POST"])
