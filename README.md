@@ -1,19 +1,21 @@
-# Ling508_MilestoneProject_DMee
+# Sense Disambiguator
 
-## Week 6 Submission
-## PLEASE NOTE that main is now ahead of Week 6. Reference week 6 branch if necessary.
+## Investigating word sense differences by context
+## Note, all texts used as examples are scraped from Project Gutenburg. No commercial designs are intended, rather they represent access to a single object which can be treated as a corpus. 
 
 [My_github_repo](https://github.com/dlmee/Ling508_MilestoneProject_DMee)
 
-This version implements a flask api. It utilizes both a dockerfile and docker-compose.yml. First clone the database, then create a local server at the directory, which can be done in Python by putting the following in the terminal `python -m http.server
-`. 
+This repository is the culmination of a 7 week project for a graduate level course. In the course, I develop an app that sets use cases, is designed using UML (see documents directory), scrapes data from the internet, populates an SQL database, and uses a flask api. The project I have designed is intended to explore the way in which we refine data influences the quality and by extension the ways in which we can more effectively manipulate that data. 
 
-Then you may run docker-compose up. It will download all required code and then initialize the database, and finally start the api, by calling app.py. 
+Already having completed this project, there are some things that I would design from the ground up differently. Most significantly the runtime for building the mysql database is quite hefty. A lot is happening under the hood! Once a database is populated, the use case of finding the different senses of a word is quite fast. How effective these use cases are, bears future investigation. One significant factor is simply that these databases are rather small. While this model does not stack databases, I envision this as a meaningful future upgrade. Rather than looking at one text, what happens when we look at every work from an author? Here, I imagine, is where statistical methods would be compelling. 
 
-Once the program is running, you can go to http:/localhost:5000 to access it. Note the link there if you want to try the UI. 
+Please note, in order to use this you will need to take the following steps. 
 
-On subsequent runs you will not need to run the local server, unless you need to repopulate the database. 
-
-Thank you!
-
+* Clone the git repository. 
+* run a local server `python -m http.server`
+* docker-compose up
+* go to http://localhost:5000
+* Follow the directions there, or reference the hyperlinked http://localhost:5000
+* Send a post request via the generate a database section. 
+* You may now search the senses of a given word. 
 

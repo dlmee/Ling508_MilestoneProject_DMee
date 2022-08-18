@@ -82,6 +82,13 @@ class DB_Populator:
         longstring = ', '.join(mergedlist)
         return longstring[:max]
 
+    def emptydb(self):
+        self.repo.cursor.execute("DELETE FROM lemma")
+        self.repo.cursor.execute("DELETE FROM vectors")
+        self.repo.cursor.execute("DELETE FROM lexicon")
+        self.repo.cursor.execute("DELETE FROM context_sentences")
+
+
 '''if __name__ == "__main__":
     DBP = DB_Populator()
     url = 'http://localhost:8000/Scrapes/GM_TPaC.html'

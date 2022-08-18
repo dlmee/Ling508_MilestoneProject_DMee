@@ -23,8 +23,12 @@
 <pre id="response"></pre>
 
 <h2>Generate a database</h2>
-<p>   url = 'http://host.docker.internal:8000/Scrapes/GM_TPaC.html'</p>>
-
+<p>Currently there are five different texts that are easily accessible, they reside in this repository for ease of access. Do note, however, that it is possible that this api could adequately scrape other html files from the web, should the text be accessible in the body section. This current build can only load one text at a time. However, future iterations could easily stack texts into a growing corpus which has useful research implications for how word senses evolve as the quantity of data grows.</p>
+<p>   url = 'http://host.docker.internal:8000/Scrapes/GM_TPaC.html'</p>
+<p>   url = 'http://host.docker.internal:8000/Scrapes/GM_TPaG.html'</p>
+<p>   url = 'http://host.docker.internal:8000/Scrapes/GM_WMM.html'</p>
+<p>   url = 'http://host.docker.internal:8000/Scrapes/GM_SG.html'</p>
+<p>   url = 'http://host.docker.internal:8000/Scrapes/GM_ATBNW.html'</p>
 <form id="form2">
     <div class="input-group">
         <label for="url">url: </label>
@@ -35,6 +39,11 @@
 
 <h2>Response: </h2>
 <pre id="success"></pre>
+
+<button class="RESET"
+onclick="window.location.href = 'http://localhost:5000/reset';">
+    Reset the Database
+</button>
 
 
 </body>

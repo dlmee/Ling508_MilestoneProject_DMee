@@ -44,6 +44,12 @@ def web() -> str:
     with open("web/sense_finder.html", "r") as f:
         return f.read()
 
+@app.route('/reset', methods=["GET"])
+def reset_db() -> str:
+    services.reset_db()
+    app.logger.info("/reset - Reset the db.")
+    return jsonify({"msg": "Success. The database is now empty"})
+
 @app.route("/generatedb", methods=["POST"])
 @cross_origin(origin='localhost', headers=['Content-Type', 'Authorization'])
 def generate_db():

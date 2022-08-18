@@ -4,7 +4,7 @@ USE mcdonald;
 
 CREATE TABLE lexicon (
     id INT NOT NULL AUTO_INCREMENT,
-    wform VARCHAR(30) NOT NULL,
+    wform VARCHAR(50) NOT NULL,
     indexed_sents VARCHAR(800),
     PRIMARY KEY (id)
 );
@@ -15,7 +15,7 @@ VALUE ('buzzwole', 'these would be indexed sentences e.g. 1,17,542,1091');
 
 CREATE TABLE sensicon (
     id INT NOT NULL AUTO_INCREMENT,
-    wform VARCHAR(30) NOT NULL,
+    wform VARCHAR(50) NOT NULL,
     sense INT,
     definition VARCHAR(200),
     indexed_sents VARCHAR(200),
@@ -28,7 +28,7 @@ VALUE ('buzzwole', 1, 'a pokemon that is every programmers nightmare', 'example 
 
 CREATE TABLE lemma (
     id INT NOT NULL AUTO_INCREMENT,
-    lform VARCHAR(15) NOT NULL,
+    lform VARCHAR(50) NOT NULL,
     wforms VARCHAR(270),
     PRIMARY KEY (id)
 );
@@ -38,8 +38,8 @@ INSERT INTO lemma
 VALUE ('buzzwole', 'buzzowling, buzzing, buzzwoled');
 
 CREATE TABLE vectors (
-    wform VARCHAR(30) NOT NULL,
-    lform VARCHAR(15),
+    wform VARCHAR(50) NOT NULL,
+    lform VARCHAR(50),
     vecform VARCHAR(450),
     PRIMARY KEY (wform)
 );

@@ -12,10 +12,14 @@
 <div>
   <p>NOTE: This will take a few minutes, it's doing a lot of processing under the hood.</p>
   <p>You will have to run this first (but only once!), before you generate a post request. Otherwise the database will be largely empty.</p>
-  <p>Currently the scrape is pointed at 'http://host.docker.internal:8000/Scrapes/GM_TPaC.html' this means you will need to have a local server running at this directory</p>
-    <p>Currently this is set up as a GET request type, but this could easily be retooled as a POST to target different text sources.</p>
+    <p>Currently there are five different texts that are easily accessible, they reside in this repository for ease of access. Do note, however, that it is possible that this api could adequately scrape other html files from the web, should the text be accessible in the body section. This current build can only load one text at a time. However, future iterations could easily stack texts into a growing corpus which has useful research implications for how word senses evolve as the quantity of data grows.</p>
+<p>   url = 'http://host.docker.internal:8000/Scrapes/GM_TPaC.html'</p>
+<p>   url = 'http://host.docker.internal:8000/Scrapes/GM_TPaG.html'</p>
+<p>   url = 'http://host.docker.internal:8000/Scrapes/GM_WMM.html'</p>
+<p>   url = 'http://host.docker.internal:8000/Scrapes/GM_SG.html'</p>
+<p>   url = 'http://host.docker.internal:8000/Scrapes/GM_ATBNW.html'</p>
 <p>Endpoint: http://localhost:5000/generatedb</p>
-<p>Request type: GET</p>
+<p>Request type: POST</p>
 <p>Response: </p>
 <pre>
   {
@@ -58,6 +62,13 @@
         ]
     }
 </pre>
+</div>
+
+<h3>Reset the database</h3>
+<div>
+    <p>Resets the database to empty. This will allow population of a different database.</p>
+    <p>Endpoint: http://localhost:5000/reset</p>
+    <p>Response: {"msg": "Success. The database is now empty"}</p>
 </div>
 </body>
 </html>

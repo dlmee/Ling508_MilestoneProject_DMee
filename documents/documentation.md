@@ -1,7 +1,6 @@
 # Sense Disambiguator
 
 Dillon Mee
-Ling 508
 Summer, 2022
 
 ## Find Sense

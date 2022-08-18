@@ -25,6 +25,10 @@ class Services:
         result = SenseDistributor(target, vectors, sentences, lexicon) #result.senses will be a list of senses objects
         return result
 
+    def reset_db(self):
+        RDB = DB_Populator()
+        RDB.emptydb()
+
 
 
 
