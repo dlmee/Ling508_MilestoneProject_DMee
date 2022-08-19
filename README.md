@@ -5,6 +5,8 @@
 
 [My_github_repo](https://github.com/dlmee/Ling508_MilestoneProject_DMee)
 
+[A demo of the code](https://youtu.be/wLS1umlpstE)
+
 This repository is the culmination of a 7 week project for a graduate level course. In the course, I develop an app that sets use cases, is designed using UML (see documents directory), scrapes data from the internet, populates an SQL database, and uses a flask api. The project I have designed is intended to explore the way in which we refine data influences the quality and by extension the ways in which we can more effectively manipulate that data. 
 
 Already having completed this project, there are some things that I would design from the ground up differently. Most significantly the runtime for building the mysql database is quite hefty. A lot is happening under the hood! Once a database is populated, the use case of finding the different senses of a word is quite fast. How effective these use cases are, bears future investigation. One significant factor is simply that these databases are rather small. While this model does not stack databases, I envision this as a meaningful future upgrade. Rather than looking at one text, what happens when we look at every work from an author? Here, I imagine, is where statistical methods would be compelling. 
